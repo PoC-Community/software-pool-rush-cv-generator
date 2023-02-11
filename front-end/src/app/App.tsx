@@ -1,12 +1,14 @@
-import { Center, Spinner, Text, VStack } from '@chakra-ui/react';
+import MyRoutes from "./Routes";
+import { ChakraProvider } from "@chakra-ui/react";
 
-const App = (): JSX.Element => (
-	<Center mt="160px">
-		<VStack spacing="32px">
-			<Text>It's time for you to start frontend development!</Text>
-			<Spinner w="132px" h="132px" />
-		</VStack>
-	</Center>
-);
+const App = (): JSX.Element => {
+  return (
+    <div>
+      <ChakraProvider>
+        <MyRoutes/>
+      </ChakraProvider>
+    </div>
+  );
+}
 
 export default App;
