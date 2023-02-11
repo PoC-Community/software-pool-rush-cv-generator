@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Input, Stack, Button, Link, Heading } from '@chakra-ui/react';
+import { Input, Stack, Button, Link, Heading, VStack, Center , Box} from '@chakra-ui/react';
 
 const Login = () : ReactElement => {
     const [show] = React.useState(false);
@@ -11,34 +11,62 @@ const Login = () : ReactElement => {
     }
 
     return ( 
+        <Box bgGradient='linear(to-l, #7F7FD5, #86A8E7, #91EAE4)' height={'100vh'}>
         <Stack>
-            <Heading id='app-title' size='2xl'>CV Generator</Heading>
-            <Heading id='app-sub-title' size='xl'>Create your own CV</Heading>
-            <Input 
-            placeholder='Enter email'
-            onChange={e => setEmail(e.target.value)}
-            />
-            <Input 
-            type={show ? 'text' : 'password'} 
-            placeholder='Enter password'
-            onChange={e => setPassword(e.target.value)}
-            />
-            <Link href='/Dashboard'>
-                <Button id='loginPage-login-button' onClick={handleClick}>
-                    Login
-                </Button>
-            </Link>
-            <Link href='/register'>
-                <Button id='loginPage-register-button'>
-                    Register
-                </Button>
-            </Link>
-            <Link href='/'>
-                <Button id='loginPage-home-button'>
-                Return to home page
-                </Button>
-            </Link>
+            <Center mt="50px">
+            <VStack spacing="20px">
+            <Heading id="app-title" as="h1" size="4xl" noOfLines={1} textColor="white"
+            paddingTop='150px'>
+                CV Generator
+            </Heading>
+            <Heading id="app-sub-title" as="h2" size="xl" textColor="white">
+                Create your own CV
+            </Heading>
+                <VStack spacing="20px">
+                    <Input 
+                    placeholder='Enter email'
+                    textColor={"white"}
+                    bgColor="white"
+                    onChange={e => setEmail(e.target.value)}
+                    width='432px'
+                    borderRadius="20px"
+                    paddingLeft="20px"
+                    />
+                    <Input 
+                    type={show ? 'text' : 'password'} 
+                    placeholder='Enter password'
+                    onChange={e => setPassword(e.target.value)}
+                    textColor={"white"}
+                    bgColor="white"
+                    width='432px'
+                    borderRadius="20px"
+                    paddingLeft="20px"
+                    />
+                    <Link href='/Dashboard' paddingTop="20px">
+                        <Button id='loginPage-login-button' onClick={handleClick}
+                         variant="solid" bgColor="white" textColor="#86A8E7"
+                         borderRadius="20px" width='432px'>
+                            Login
+                        </Button>
+                    </Link>
+                    <Link href='/register'>
+                        <Button id='loginPage-register-button' 
+                        variant="solid" bgColor="transparent"
+                        border="1px" borderColor="white" textColor="white"
+                        borderRadius="20px" width='432px'
+                        _hover={{ bg: "white",  textColor:"#86A8E7"}}>
+                            Register
+                        </Button>
+                    </Link>
+                    <Link href='/' id='loginPage-home-button' textColor="white"
+                        _hover={{}}>
+                        Return to home page
+                    </Link>
+                </VStack>
+            </VStack>
+            </Center>
         </Stack>
+        </Box>
     )
 }
 

@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom/client';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './app/App';
-import theme from './theme';
-import './theme/index.css';
-
+import "@fontsource/montserrat"
+import theme from './theme'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<ChakraProvider theme={theme} resetCSS>
+		<ChakraProvider theme={theme}>
 			<App />
 		</ChakraProvider>
 	</React.StrictMode>,
