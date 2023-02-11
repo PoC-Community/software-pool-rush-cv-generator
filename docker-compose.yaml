@@ -1,0 +1,37 @@
+version: '3'
+services:
+  db:
+    image: postgres:15.1
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    env_file:
+      - ./db/.env
+    networks:
+      - back-tier
+
+  front:
+    build: ./front-end/
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./front-end/.env
+
+  backend:
+    depends_on:
+      - db
+    build: ./back-end/
+    ports:
+      - "8080:8080"
+    restart: always
+    env_file:
+      - ./back-end/.env
+    networks:
+      - back-tier
+
+networks:
+  back-tier: {}
+
+volumes:
+  db_data: {}
