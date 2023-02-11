@@ -1,30 +1,15 @@
 import {
-    Box,
-    Flex,
-    Text,
-    IconButton,
-    Button,
-    Stack,
-    Collapse,
-    Icon,
-    Link,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    useColorModeValue,
-    useBreakpointValue,
-    useDisclosure,
-  } from '@chakra-ui/react';
-import {
-    HamburgerIcon,
-    CloseIcon,
-    ChevronDownIcon,
-    ChevronRightIcon,
+  ChevronDownIcon,
+  ChevronRightIcon, CloseIcon, HamburgerIcon
 } from '@chakra-ui/icons';
-  
+import {
+  Box, Button, Collapse, Flex, Icon, IconButton, Link,
+  Popover, PopoverContent, PopoverTrigger, Stack, Text, useBreakpointValue, useColorModeValue, useDisclosure
+} from '@chakra-ui/react';
+
 const TopBar = () => {
     const { isOpen, onToggle } = useDisclosure();
-  
+
     return (
       <Box>
         <Flex
@@ -57,12 +42,12 @@ const TopBar = () => {
               color={useColorModeValue('gray.800', 'white')}>
               CV Generator
             </Text>
-  
+
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav />
             </Flex>
           </Flex>
-  
+
           <Stack
             flex={{ base: 1, md: 0 }}
             justify={'flex-end'}
@@ -85,19 +70,19 @@ const TopBar = () => {
             </Link>
           </Stack>
         </Flex>
-  
+
         <Collapse in={isOpen} animateOpacity>
           <MobileNav />
         </Collapse>
       </Box>
     );
   }
-  
+
 const DesktopNav = () => {
     const linkColor = useColorModeValue('gray.600', 'gray.200');
     const linkHoverColor = useColorModeValue('gray.800', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-  
+
     return (
       <Stack direction={'row'} spacing={4}>
         {NAV_ITEMS.map((navItem) => (
@@ -117,7 +102,7 @@ const DesktopNav = () => {
                   {navItem.label}
                 </Link>
               </PopoverTrigger>
-  
+
               {navItem.children && (
                 <PopoverContent
                   border={0}
@@ -139,7 +124,7 @@ const DesktopNav = () => {
       </Stack>
     );
   };
-  
+
   const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     return (
       <Link
@@ -173,7 +158,7 @@ const DesktopNav = () => {
       </Link>
     );
   };
-  
+
   const MobileNav = () => {
     return (
       <Stack
@@ -186,10 +171,10 @@ const DesktopNav = () => {
       </Stack>
     );
   };
-  
+
   const MobileNavItem = ({ label, children, href }: NavItem) => {
     const { isOpen, onToggle } = useDisclosure();
-  
+
     return (
       <Stack spacing={4} onClick={children && onToggle}>
         <Flex
@@ -216,7 +201,7 @@ const DesktopNav = () => {
             />
           )}
         </Flex>
-  
+
         <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
           <Stack
             mt={2}
@@ -236,17 +221,18 @@ const DesktopNav = () => {
       </Stack>
     );
   };
-  
+
   interface NavItem {
     label: string;
     subLabel?: string;
     children?: Array<NavItem>;
     href?: string;
   }
-  
+
 const NAV_ITEMS: Array<NavItem> = [
     {
-      label: 'My CVs'
+      label: 'My CVs',
+      href: '/Dashboard'
     }
   ];
 
