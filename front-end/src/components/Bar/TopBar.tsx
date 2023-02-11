@@ -68,19 +68,21 @@ const TopBar = () => {
             justify={'flex-end'}
             direction={'row'}
             spacing={6}>
-            <Button
-              as={'a'}
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'pink.400'}
-              href={'#'}
-              _hover={{
-                bg: 'pink.300',
-              }}>
-              Create a CV
-            </Button>
+            <Link href="/create">
+              <Button
+                as={'a'}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'pink.400'}
+                href={'#'}
+                _hover={{
+                  bg: 'pink.300',
+                }}>
+                Create a CV
+              </Button>
+            </Link>
           </Stack>
         </Flex>
   
