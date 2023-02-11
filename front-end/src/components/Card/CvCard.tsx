@@ -1,8 +1,19 @@
 import { ArrowRightIcon, CloseIcon } from '@chakra-ui/icons';
 import { Box, Card, CardBody, Divider, Flex, GridItem, Heading, Image, Spacer, Stack, Text } from '@chakra-ui/react';
+import axios from 'axios';
 import Cv from 'Types/Cv';
 
-const CvCard = ({ cv }: { cv: Cv }) => {
+const CvCard = ({ cv, actualisationCv }: { cv: Cv, actualisationCv: () => void }) => {
+	const deleteCv = async (uuid: string) : Promise<void> => {
+		try {
+				await axios.delete(`http://localhost:8080/cv/${uuid}`);
+				actualisationCv();
+				return;
+		} catch(error) {
+				console.log(error);
+				return;
+		}
+};
 	return (
 		<GridItem w="100%" h="100%">
 			<Card maxW="sm">
@@ -10,7 +21,7 @@ const CvCard = ({ cv }: { cv: Cv }) => {
 					<Flex>
             <Image width={20} height={20} src={cv.information.photoUrl} borderRadius="lg" />
             <Spacer />
-            <CloseIcon style={{cursor: "pointer"}} />
+            <CloseIcon style={{cursor: "pointer"}} onClick={() => deleteCv(cv.uuid)} />
             <Box w={5} />
             <ArrowRightIcon style={{cursor: "pointer"}} />
           </Flex>

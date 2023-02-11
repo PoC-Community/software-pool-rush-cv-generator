@@ -29,7 +29,9 @@ const Dashboard = () : ReactElement => {
         <Stack>
             <TopBar/>
             {cv.map((element) => (
-				<CvCard cv={element} />
+				<CvCard cv={element} actualisationCv={() => (async () => {
+                    setCv(await listCv());
+                })()} />
 			))}
         </Stack>
     )
