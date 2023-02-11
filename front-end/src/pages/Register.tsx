@@ -30,19 +30,21 @@ const Register = () : ReactElement => {
             placeholder='Confirm password'
             onChange={e => setConfirmedPassword(e.target.value)}
             />
-            <Button onClick={handleClick} id='registerPage-register-button'>
-                Register
-            </Button>
-            <Button id='registerPage-login-button'>
-                <Link href='/login'>
+            <Link href='/Dashboard'>
+                <Button id='registerPage-register-button' onClick={handleClick}>
+                    Register
+                </Button>
+            </Link>
+            <Link href='/login'>
+                <Button id='registerPage-login-button'>
                     Login
-                </Link>
-            </Button>
-            <Button id='registerPage-home-button'>
-                <Link href='/'>
+                </Button>
+            </Link>
+            <Link href='/'>
+                <Button id='registerPage-home-button'>
                     Return to home page
-                </Link>
-            </Button>
+               </Button>
+            </Link>
         </Stack>
     )
 }

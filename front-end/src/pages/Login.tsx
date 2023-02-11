@@ -23,17 +23,21 @@ const Login = () : ReactElement => {
             placeholder='Enter password'
             onChange={e => setPassword(e.target.value)}
             />
-            <Button onClick={handleClick} id='loginPage-login-button'>Login</Button>
-            <Button id='loginPage-register-button'>
-                <Link href='/register'>
+            <Link href='/Dashboard'>
+                <Button id='loginPage-login-button' onClick={handleClick}>
+                    Login
+                </Button>
+            </Link>
+            <Link href='/register'>
+                <Button id='loginPage-register-button'>
                     Register
-                </Link>
-            </Button>
-            <Button id='loginPage-home-button'>
-                <Link href='/'>
-                    Return to home page
-                </Link>
-            </Button>
+                </Button>
+            </Link>
+            <Link href='/'>
+                <Button id='loginPage-home-button'>
+                Return to home page
+                </Button>
+            </Link>
         </Stack>
     )
 }

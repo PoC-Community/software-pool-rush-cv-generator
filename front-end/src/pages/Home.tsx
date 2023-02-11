@@ -6,16 +6,16 @@ const HomePage = () : ReactElement => {
         <Stack>
             <Heading id='app-title' size='2xl'>CV Generator</Heading>
             <Heading id='app-sub-title' size='xl'>Create your own CV</Heading>
-            <Button>
                 <Link id='homePage-register-button' href='/register'>
-                    Create an account
+                    <Button>
+                        Create an account
+                    </Button>
                 </Link>
-            </Button>
-            <Button>
                 <Link id='homePage-login-button' href='/login'>
-                    Login
+                    <Button>
+                        Log In
+                    </Button>
                 </Link>
-            </Button>
         </Stack>
     )
 }
