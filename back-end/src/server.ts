@@ -1,14 +1,17 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { host, port } from './config';
-
 import prisma from './client';
+import { host, port } from './config';
+import cvRouter from './endpoints/cv';
+import userRouter from './endpoints/user';
 
 // Declare an asynchronous main
 async function main() {
     const app = express()
 
     app.use(bodyParser.json())
+    app.use(cvRouter);
+    app.use(userRouter);
     app.listen(port, () => {
         console.log(`Server listening on http://${host}:${port}/`);
     });
