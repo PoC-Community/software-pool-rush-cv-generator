@@ -59,7 +59,7 @@ const TopBar = () => {
                 fontWeight={600}
                 color={'white'}
                 bg="transparent"
-                href={'#'}
+                href={'/create'}
                 _hover={{
                   textDecoration: 'underline',
                 }}
