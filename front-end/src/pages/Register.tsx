@@ -12,20 +12,20 @@ const Register = () : ReactElement => {
         console.log("Confirmed password: %s\n", confirmedPassword);
     }
 
-    return ( 
+    return (
         <Stack>
             <Heading id='app-title' size='2xl'>CV Generator</Heading>
             <Heading id='app-sub-title' size='xl'>Create your own CV</Heading>
-            <Input 
+            <Input
             placeholder='Enter email'
             onChange={e => setEmail(e.target.value)}
             />
-            <Input 
-            type={show ? 'text' : 'password'} 
+            <Input
+            type={show ? 'text' : 'password'}
             placeholder='Enter password'
             onChange={e => setPassword(e.target.value)}
             />
-            <Input 
+            <Input
             type={show ? 'text' : 'password'}
             placeholder='Confirm password'
             onChange={e => setConfirmedPassword(e.target.value)}
