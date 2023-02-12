@@ -2,7 +2,7 @@ import {
     CloseIcon, HamburgerIcon
 } from '@chakra-ui/icons';
 import {
-  Box, Button, Collapse, Flex, Icon, IconButton, Link,
+  Box, Button, Flex, IconButton, Link,
   Popover, PopoverContent, PopoverTrigger, Stack, Text, useBreakpointValue, useColorModeValue, useDisclosure
 } from '@chakra-ui/react';
 

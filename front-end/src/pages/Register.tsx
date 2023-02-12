@@ -38,9 +38,10 @@ const Register = () : ReactElement => {
             paddingTop='150px'>
                 CV Generator
             </Heading>
-            <Heading id="app-sub-title" as="h2" size="xl" textColor="white">
+            <Heading id="app-sub-title" as="h2" size="xl" textColor="white" paddingBottom="20px">
                 Create your own CV
             </Heading>
+<<<<<<< HEAD
                 <FormControl isInvalid={error.length > 0}>
                     <VStack spacing="20px">
                         <Input
@@ -76,6 +77,50 @@ const Register = () : ReactElement => {
                         variant="solid" bgColor="white" textColor="#86A8E7"
                         borderRadius="20px" width='432px'>
                             Register
+=======
+                <VStack spacing="20px">
+                    <Input
+                    placeholder='Enter email'
+                    onChange={e => setEmail(e.target.value)}
+                    bgColor="white"
+                    textColor="gray.600"
+                    width='432px'
+                    borderRadius="20px"
+                    paddingLeft="20px"
+                    />
+                    <Input
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                    onChange={e => setPassword(e.target.value)}
+                    bgColor="white"
+                    textColor="gray.600"
+                    width='432px'
+                    borderRadius="20px"
+                    paddingLeft="20px"
+                    />
+                    <Input
+                    type={show ? 'text' : 'password'}
+                    placeholder='Confirm password'
+                    onChange={e => setConfirmedPassword(e.target.value)}
+                    bgColor="white"
+                    width='432px'
+                    borderRadius="20px"
+                    paddingLeft="20px"
+                    />
+                    <Button id='registerPage-register-button' onClick={onRegister}
+                    variant="solid" bgColor="white" textColor="#86A8E7"
+                    borderRadius="20px" width='432px'>
+                        Register
+                    </Button>
+                    <Link href='/login'>
+                        <Button id='registerPage-login-button'
+                        variant="solid" bgColor="transparent"
+                        border="1px" borderColor="white" textColor="white"
+                        borderRadius="20px" width='432px'
+                        _hover={{ bg: "white",  textColor:"#86A8E7"}}
+                        >
+                            Login
+>>>>>>> a27c823df8cd073f52c79b4e52b0f5bbbfb7d6a7
                         </Button>
                         <Link href='/login'>
                             <Button id='registerPage-login-button'
