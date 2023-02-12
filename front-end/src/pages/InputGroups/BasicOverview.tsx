@@ -21,7 +21,7 @@ const Overview = ({namee, photoUrl, onChangeName, onChangePhotoUrl}: {namee: str
             <Spacer />
             <ShowImage sourc={photoUrl}/>
             <HStack spacing='20px' paddingBottom="20px" paddingTop="20px">
-                <Input size="md" placeholder="Name" value={namee} onChange={(namee) => onChangeName(namee.target.value)} width="30" borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
+                <Input size="md" placeholder="Name*" value={namee} onChange={(namee) => onChangeName(namee.target.value)} width="30" borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
                 <Input size="md" placeholder="Profile Picture URL" value={photoUrl} onChange={e => onChangePhotoUrl(e.target.value)} width="60"
                 borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
             </HStack>

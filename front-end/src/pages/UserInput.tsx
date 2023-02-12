@@ -5,6 +5,7 @@ import { ReactElement, useState } from 'react';
 import Overview from './InputGroups/BasicOverview';
 import { Education, Experience } from './InputGroups/MassListing';
 import Skills from './InputGroups/SmallListing';
+import Help from './HelpPage';
 
 const User = () : ReactElement => {
     const [name, setName] = useState('');
@@ -61,6 +62,8 @@ const User = () : ReactElement => {
             Submit
         </Button>
         <Box boxSize='5'/>
+        <Help />
+        <Box boxSize='20'/>
     </Stack>);
 }
 

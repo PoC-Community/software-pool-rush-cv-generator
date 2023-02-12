@@ -1,5 +1,5 @@
 import { PlusSquareIcon, SmallCloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading, HStack, Input, Spacer, Stack } from '@chakra-ui/react';
+import { Box, Button, Heading, HStack, Input, Spacer, Stack, useToast } from '@chakra-ui/react';
 import { ReactElement, useState } from 'react';
 
 const ShowSkill = ({ele, deleteEle}: {ele: string, deleteEle: () => (void) }): JSX.Element => (
@@ -42,13 +42,26 @@ const ShowLang = ({ele, deleteEle}: {ele: string, deleteEle: () => (void) }): JS
 )
 
 const Skills = ({skills, onChangeSkills, languages, onChangeLanguages} : {skills: string[], onChangeSkills: (value: string[]) => void, languages: string[], onChangeLanguages: (value: string[]) => void}) : ReactElement => {
+    const toast = useToast();
     const [elemen, setElemen] = useState('');
     const handleSkill = () => {
-        onChangeSkills([...skills, elemen]);
+        if (elemen){
+            if (skills.indexOf(elemen) === -1)
+                onChangeSkills([...skills, elemen]);
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     const [lang, setLangEle] = useState('');
     const handleLang = () => {
-        onChangeLanguages([...languages, lang])
+        if (lang){
+            if (languages.indexOf(lang) === -1)
+                onChangeLanguages([...languages, lang])
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     return (
         <>
@@ -75,7 +88,7 @@ const Skills = ({skills, onChangeSkills, languages, onChangeLanguages} : {skills
                 </Heading>
                 {languages.map((e, index) => <ShowLang ele={e} key={index.toString()} deleteEle={() => onChangeLanguages(languages.filter((g) => g !== e))} />)}
                 <Spacer />
-                <Input size="md" placeholder="Add languages..." onChange={e => setLangEle(e.target.value)} width="15"
+                <Input size="md" placeholder="Add a language...*" onChange={e => setLangEle(e.target.value)} width="15"
                 borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
                 <Button onClick={handleLang} size="md" height="40px" width="100px" leftIcon={<PlusSquareIcon />}
                 variant="solid" bgColor="white" textColor="#86A8E7"

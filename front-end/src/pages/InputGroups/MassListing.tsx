@@ -1,5 +1,5 @@
 import { SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading, HStack, Input, Spacer, Stack } from '@chakra-ui/react';
+import { Box, Button, Heading, HStack, Input, Spacer, Stack, useToast } from '@chakra-ui/react';
 import { ReactElement, useState } from 'react';
 
 const ShowExp = ({expEle, deleteExp}: {expEle: string, deleteExp: () => void}): JSX.Element => (
@@ -41,9 +41,16 @@ const ShowEdu = ({eduEle, deleteEdu}: {eduEle: string, deleteEdu: () => (void)})
 )
 
 export const Education = ({education, onChangeEducation}: {education: string[], onChangeEducation: (value: string[]) => void}) : ReactElement => {
+    const toast = useToast();
     const [eduEle, setEduEle] = useState('');
     const handleEdu = () => {
-        onChangeEducation([...education, eduEle])
+        if (eduEle){
+            if (education.indexOf(eduEle) === -1)
+                onChangeEducation([...education, eduEle])
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     return (
         <>
@@ -67,9 +74,16 @@ export const Education = ({education, onChangeEducation}: {education: string[], 
 }
 
 export const Experience = ({experience, onChangeExperience}: {experience: string[], onChangeExperience: (value: string[]) => void}): ReactElement => {
+    const toast = useToast();
     const [expEle, setExpEle] = useState('');
     const handleExp = () => {
-        onChangeExperience([...experience, expEle])
+        if (expEle){
+            if (experience.indexOf(expEle) === -1)
+                onChangeExperience([...experience, expEle])
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     return (
         <>
