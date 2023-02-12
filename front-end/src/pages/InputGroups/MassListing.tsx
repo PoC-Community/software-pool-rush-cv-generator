@@ -1,6 +1,6 @@
-import React, { ReactElement, useState } from 'react';
-import { Stack, Box, HStack, Spacer, Heading, Button, Input } from '@chakra-ui/react'
-import { SmallCloseIcon, SmallAddIcon } from '@chakra-ui/icons'
+import { SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import { Box, Button, Heading, HStack, Input, Spacer, Stack, useToast } from '@chakra-ui/react';
+import { ReactElement, useState } from 'react';
 
 const ShowExp = ({expEle, deleteExp}: {expEle: string, deleteExp: () => void}): JSX.Element => (
     <Stack align='center'>
@@ -40,11 +40,17 @@ const ShowEdu = ({eduEle, deleteEdu}: {eduEle: string, deleteEdu: () => (void)})
     </Stack>
 )
 
-export const Education = () : ReactElement => {
+export const Education = ({education, onChangeEducation}: {education: string[], onChangeEducation: (value: string[]) => void}) : ReactElement => {
+    const toast = useToast();
     const [eduEle, setEduEle] = useState('');
-    const [education, setEducation] = useState<string[]>([]);
     const handleEdu = () => {
-        setEducation([...education, eduEle])
+        if (eduEle){
+            if (education.indexOf(eduEle) === -1)
+                onChangeEducation([...education, eduEle])
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     return (
         <>
@@ -52,7 +58,7 @@ export const Education = () : ReactElement => {
             <Heading size="md" noOfLines={1} textAlign='center' textColor="white">
                     Education
                 </Heading>
-                    {education.map((e, index) => <ShowEdu eduEle={e} key={index.toString()} deleteEdu={() => setEducation(education.filter((a) => a !== e))} />)}
+                    {education.map((e, index) => <ShowEdu eduEle={e} key={index.toString()} deleteEdu={() => onChangeEducation(education.filter((a) => a !== e))} />)}
                 <Spacer />
                 <Input size="md" placeholder="Add education..." width="784px" onChange={e => setEduEle(e.target.value)}
                 borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
@@ -67,11 +73,17 @@ export const Education = () : ReactElement => {
     )
 }
 
-export const Experience = () : ReactElement => {
+export const Experience = ({experience, onChangeExperience}: {experience: string[], onChangeExperience: (value: string[]) => void}): ReactElement => {
+    const toast = useToast();
     const [expEle, setExpEle] = useState('');
-    const [experience, setExperience] = useState<string[]>([]);
     const handleExp = () => {
-        setExperience([...experience, expEle])
+        if (expEle){
+            if (experience.indexOf(expEle) === -1)
+                onChangeExperience([...experience, expEle])
+            else
+                toast({title: 'Error', description: "Repeated Input.", status: 'error', duration: 1500, isClosable: true,});
+        } else
+            toast({title: 'Error', description: "No Input.", status: 'error', duration: 1500, isClosable: true,});
     };
     return (
         <>
@@ -81,7 +93,7 @@ export const Experience = () : ReactElement => {
             </Heading>
                 {experience.map((e, index) => {
                     return (
-                    <ShowExp expEle={e} key={index.toString()} deleteExp={() => setExperience(experience.filter((f) => f !== e))}/>
+                    <ShowExp expEle={e} key={index.toString()} deleteExp={() => onChangeExperience(experience.filter((f) => f !== e))}/>
                 )})}
             <Spacer />
             <Input size="md" placeholder="Add experience..." width="784px" onChange={e => setExpEle(e.target.value)}

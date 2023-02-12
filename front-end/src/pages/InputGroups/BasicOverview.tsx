@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import { Image, Stack, Box, HStack, Spacer, Heading, Button, Input } from '@chakra-ui/react'
-import { CheckCircleIcon } from '@chakra-ui/icons'
+import { Box, Heading, HStack, Image, Input, Spacer, Stack } from '@chakra-ui/react';
+import { ReactElement } from 'react';
 
 const ShowImage = ({sourc}: {sourc: string}): JSX.Element => (
     <Stack align='center'>
@@ -11,11 +10,7 @@ const ShowImage = ({sourc}: {sourc: string}): JSX.Element => (
     </Stack>
 )
 
-const Overview = () : ReactElement => {
-    const [profile, setProfile] = useState('https://rouelibrenmaine.fr/wp-content/uploads/2018/10/empty-avatar.png');
-    const handleClick = () => {
-        console.log(`${profile}`);
-    };
+const Overview = ({namee, photoUrl, onChangeName, onChangePhotoUrl}: {namee: string, photoUrl: string, onChangeName: (value: string) => void, onChangePhotoUrl: (value: string) => void}) : ReactElement => {
     return (
         <>
         <Stack align='center'>
@@ -24,17 +19,12 @@ const Overview = () : ReactElement => {
                 Basic
             </Heading>
             <Spacer />
-            <ShowImage sourc={profile}/>
+            <ShowImage sourc={photoUrl}/>
             <HStack spacing='20px' paddingBottom="20px" paddingTop="20px">
-                <Input size="md" placeholder="First Name" width="30" borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
-                <Input size="md" placeholder="Last Name" width="30" borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
-                <Input size="md" placeholder="Profile Picture URL" onChange={e => setProfile(e.target.value)} width="60" 
+                <Input size="md" placeholder="Name*" value={namee} onChange={(namee) => onChangeName(namee.target.value)} width="30" borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
+                <Input size="md" placeholder="Profile Picture URL" value={photoUrl} onChange={e => onChangePhotoUrl(e.target.value)} width="60"
                 borderRadius="20px" paddingLeft="20px" bgColor="white" textColor="gray.600"/>
             </HStack>
-            <Button onClick={handleClick} size="md" height="40px" width="150px" leftIcon={<CheckCircleIcon />} variant="solid"
-                bgColor="white" textColor="#86A8E7" borderRadius="20px">
-                    Upload
-                </Button>
         </Stack>
         </>
     )
