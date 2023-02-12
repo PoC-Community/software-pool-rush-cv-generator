@@ -38,7 +38,7 @@ const Register = () : ReactElement => {
             paddingTop='150px'>
                 CV Generator
             </Heading>
-            <Heading id="app-sub-title" as="h2" size="xl" textColor="white">
+            <Heading id="app-sub-title" as="h2" size="xl" textColor="white" paddingBottom="20px">
                 Create your own CV
             </Heading>
                 <VStack spacing="20px">
@@ -46,6 +46,7 @@ const Register = () : ReactElement => {
                     placeholder='Enter email'
                     onChange={e => setEmail(e.target.value)}
                     bgColor="white"
+                    textColor="gray.600"
                     width='432px'
                     borderRadius="20px"
                     paddingLeft="20px"
@@ -55,6 +56,7 @@ const Register = () : ReactElement => {
                     placeholder='Enter password'
                     onChange={e => setPassword(e.target.value)}
                     bgColor="white"
+                    textColor="gray.600"
                     width='432px'
                     borderRadius="20px"
                     paddingLeft="20px"
