@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { gladiaApiKey } from '../config';
 import { checkAuth } from '../endpoints/user';
 import { createCv, deleteCv, getCv, getCvs } from '../models/cv';
+import { getUser } from '../models/user';
 import { informationObject, validatorInputCreate } from '../schema/cv';
 const router = express.Router();
 
@@ -67,8 +68,10 @@ router.get('/cv/:uuid/render', async (req, res) => {
         });
         const information = data.information as z.infer<typeof informationObject>;
         const resume = await generateResume(information);
+        const user = await getUser(data.uuidUser);
         const renderInfo = {
           resume: resume.data.prediction,
+          email: user?.email,
           ...information
         };
         const output = mustache.render(templateContent, renderInfo);
