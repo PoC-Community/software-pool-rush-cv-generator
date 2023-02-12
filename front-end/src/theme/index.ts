@@ -10,4 +10,9 @@ const breakpoints = {
 	'2xl': '1440px',
 };
 
-export default extendTheme({ breakpoints });
+const fonts = {
+	heading: '',
+	body: '',
+};
+
+export default extendTheme({ breakpoints, fonts });
