@@ -9,6 +9,7 @@ import { checkAuth } from '../endpoints/user';
 import { createCv, deleteCv, getCv, getCvs } from '../models/cv';
 import { getUser } from '../models/user';
 import { informationObject, validatorInputCreate } from '../schema/cv';
+
 const router = express.Router();
 
 router.post('/cv', checkAuth, async (req, res) => {
@@ -74,8 +75,7 @@ router.get('/cv/:uuid/render', async (req, res) => {
           email: user?.email,
           ...information
         };
-        const output = mustache.render(templateContent, renderInfo);
-        res.status(StatusCodes.OK).send(output);
+          res.status(StatusCodes.OK).send(mustache.render(templateContent, renderInfo));
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error
