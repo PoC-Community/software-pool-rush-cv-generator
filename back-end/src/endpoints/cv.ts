@@ -1,17 +1,23 @@
+import axios from 'axios';
 import express from 'express';
+import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
+import mustache from 'mustache';
+import { z } from 'zod';
+import { gladiaApiKey } from '../config';
+import { checkAuth } from '../endpoints/user';
 import { createCv, deleteCv, getCv, getCvs } from '../models/cv';
-import { validatorInputCreate } from '../schema/cv';
-
+import { informationObject, validatorInputCreate } from '../schema/cv';
 const router = express.Router();
 
-router.post('/cv', async (req, res) => {
+router.post('/cv', checkAuth, async (req, res) => {
   if (validatorInputCreate.safeParse(req.body).success) {
     try {
-      res.status(StatusCodes.OK).json(await createCv(req.body));
+      //@ts-ignore
+      res.status(StatusCodes.OK).json(await createCv(req.body, req.user.uuid));
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        success: false
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+        message: false
       });
     }
   } else {
@@ -21,13 +27,13 @@ router.post('/cv', async (req, res) => {
   }
 });
 
-router.get('/cv/:uuid', async (req, res) => {
+router.get('/cv/:uuid', checkAuth,  async (req, res) => {
   try {
     const data = await getCv(req.params.uuid);
     if (data) {
       res.status(StatusCodes.OK).json(data);
     } else {
-      res.status(StatusCodes.OK).json({
+      res.status(StatusCodes.NOT_FOUND).json({
         success: false
       });
     }
@@ -38,7 +44,53 @@ router.get('/cv/:uuid', async (req, res) => {
   }
 });
 
-router.delete('/cv/:uuid', async (req, res) => {
+const generateResume = async (information: z.infer<typeof informationObject>) => {
+  return await axios.post('https://api.gladia.io/text/text/gpt3/', {
+    text: 'Generate a summary for a resume concerning a student with knowledge in react, typescript, Express and an experience in Software pool POC.'
+  }, {
+    headers: {
+        'accept': 'application/json',
+        'x-gladia-key': gladiaApiKey,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+};
+
+router.get('/cv/:uuid/render', async (req, res) => {
+  try {
+    const data = await getCv(req.params.uuid);
+    if (data) {
+      try {
+        const templateContent = fs.readFileSync(`./src/templates/${data.templateName}.html`,{
+          encoding:'utf8',
+          flag:'r'
+        });
+        const information = data.information as z.infer<typeof informationObject>;
+        const resume = await generateResume(information);
+        const renderInfo = {
+          resume: resume.data.prediction,
+          ...information
+        };
+        const output = mustache.render(templateContent, renderInfo);
+        res.status(StatusCodes.OK).send(output);
+      } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error
+        });
+      }
+    } else {
+      res.status(StatusCodes.NOT_FOUND).json({
+        success: false
+      });
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false
+    });
+  }
+});
+
+router.delete('/cv/:uuid', checkAuth, async (req, res) => {
   try {
     await deleteCv(req.params.uuid);
     res.status(StatusCodes.OK).json({
@@ -51,10 +103,10 @@ router.delete('/cv/:uuid', async (req, res) => {
   }
 });
 
-router.get('/cvs', async (req, res) => {
+router.get('/cvs', checkAuth, async (req, res) => {
   // integrate with real user id when creating the CV
-  const uuidUser = "7982fcfe-5721-4632-bede-6000885be57d";
-  res.status(StatusCodes.OK).json( await getCvs(uuidUser));
+  // @ts-ignore
+  res.status(StatusCodes.OK).json( await getCvs(req.user.uuid));
 });
 
 export default router;

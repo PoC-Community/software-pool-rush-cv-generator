@@ -4,16 +4,20 @@ import axios from 'axios';
 import Cv from 'Types/Cv';
 
 const CvCard = ({ cv, actualisationCv }: { cv: Cv, actualisationCv: () => void }) => {
-	const deleteCv = async (uuid: string) : Promise<void> => {
-		try {
-				await axios.delete(`http://localhost:8080/cv/${uuid}`);
-				actualisationCv();
-				return;
-		} catch(error) {
-				console.log(error);
-				return;
-		}
-};
+		const deleteCv = async (uuid: string) : Promise<void> => {
+			try {
+					await axios.delete(`http://localhost:8080/cv/${uuid}`, {
+						headers: {
+								Authorization: `Bearer ${localStorage.getItem('jwt')}`
+						}
+				});
+					actualisationCv();
+					return;
+			} catch(error) {
+					console.log(error);
+					return;
+			}
+	};
 	return (
 		<GridItem w="100%" h="100%">
 			<Card maxW="sm">
@@ -23,7 +27,7 @@ const CvCard = ({ cv, actualisationCv }: { cv: Cv, actualisationCv: () => void }
             <Spacer />
             <CloseIcon style={{cursor: "pointer"}} onClick={() => deleteCv(cv.uuid)} />
             <Box w={5} />
-            <ArrowRightIcon style={{cursor: "pointer"}} />
+            <ArrowRightIcon style={{cursor: "pointer"}} onClick={() => window.open(`http://localhost:8080/cv/${cv.uuid}/render`)} />
           </Flex>
           <Stack mt="6" spacing="3">
 						<Heading size="md">{cv.information.name}</Heading>

@@ -1,18 +1,35 @@
+import { Box, Button, Center, Heading, Input, Link, Stack, VStack } from '@chakra-ui/react';
+import axios from 'axios';
 import React, { ReactElement, useState } from 'react';
-import { Input, Stack, Button, Link, Heading, VStack, Center, Box } from '@chakra-ui/react';
 
 const Register = () : ReactElement => {
     const [show] = React.useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
-    const handleClick = () => {
-        console.log("Email : %s\n", email);
-        console.log("Password : %s\n", password);
-        console.log("Confirmed password: %s\n", confirmedPassword);
-    }
+    const [error, setError] = useState('');
 
-    return ( 
+    // Faire un form
+    const onRegister = async () : Promise<void> => {
+        if (password !== confirmedPassword) {
+            setError('Wrong password confirmation');
+            return;
+        }
+		try {
+			const res = await axios.post('http://localhost:8080/auth/register', {
+                email,
+                password
+            });
+            localStorage.setItem('jwt', res.data.accessToken);
+            window.location.href = '/Dashboard';
+			return;
+		} catch(error) {
+			console.log(error);
+			return;
+		}
+    };
+
+    return (
         <Box bgGradient='linear(to-l, #7F7FD5, #86A8E7, #91EAE4)' height={'100vh'}>
         <Stack>
             <Center mt="50px">
@@ -25,42 +42,37 @@ const Register = () : ReactElement => {
                 Create your own CV
             </Heading>
                 <VStack spacing="20px">
-                    <Input 
+                    <Input
                     placeholder='Enter email'
                     onChange={e => setEmail(e.target.value)}
-                    textColor={"white"}
                     bgColor="white"
                     width='432px'
                     borderRadius="20px"
                     paddingLeft="20px"
                     />
-                    <Input 
-                    type={show ? 'text' : 'password'} 
+                    <Input
+                    type={show ? 'text' : 'password'}
                     placeholder='Enter password'
                     onChange={e => setPassword(e.target.value)}
-                    textColor={"white"}
                     bgColor="white"
                     width='432px'
                     borderRadius="20px"
                     paddingLeft="20px"
                     />
-                    <Input 
+                    <Input
                     type={show ? 'text' : 'password'}
                     placeholder='Confirm password'
                     onChange={e => setConfirmedPassword(e.target.value)}
-                    textColor={"white"}
                     bgColor="white"
                     width='432px'
                     borderRadius="20px"
                     paddingLeft="20px"
                     />
-                    <Link href='/Dashboard' paddingTop="20px">
-                        <Button id='registerPage-register-button' onClick={handleClick}
-                        variant="solid" bgColor="white" textColor="#86A8E7"
-                        borderRadius="20px" width='432px'>
-                            Register
-                        </Button>
-                    </Link>
+                    <Button id='registerPage-register-button' onClick={onRegister}
+                    variant="solid" bgColor="white" textColor="#86A8E7"
+                    borderRadius="20px" width='432px'>
+                        Register
+                    </Button>
                     <Link href='/login'>
                         <Button id='registerPage-login-button'
                         variant="solid" bgColor="transparent"

@@ -7,3 +7,4 @@ export const port: number = env.get('SERVER_PORT').required(true).asInt();
 export const host: string = env.get('SERVER_HOST').required(true).asString();
 export const secretJwt: string =  env.get('SECRET_JWT').required(true).asString();
 export const saltPassword: string = env.get('SALT_PASSWORD').required(true).asString();
+export const gladiaApiKey: string = env.get('GLADIA_API_KEY').required(true).asString();

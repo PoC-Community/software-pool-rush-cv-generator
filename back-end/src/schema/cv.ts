@@ -10,7 +10,6 @@ export const informationObject = zod.object({
 });
 
 export const validatorInputCreate= zod.object({
-    uuidUser: zod.string(),
     templateName: zod.string(),
     information: informationObject
 });

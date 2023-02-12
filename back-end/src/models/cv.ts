@@ -6,12 +6,11 @@ import { informationObject } from "../schema/cv";
 
 type CvPostRequest = {
   templateName: string;
-  uuidUser: string;
   information: z.infer<typeof informationObject>;
 }
 
-export const createCv = async (data: CvPostRequest): Promise<Cv> => {
-  return await client.cv.create({data: {uuid: randomUUID(), templateName: data.templateName, information: data.information, user: {connect: {uuid: data.uuidUser}} }});
+export const createCv = async (data: CvPostRequest, uuidUser: string): Promise<Cv> => {
+  return await client.cv.create({data: {uuid: randomUUID(), templateName: data.templateName, information: data.information, user: {connect: {uuid: uuidUser}} }});
 }
 
 export const getCv = async (uuid: string) => {
