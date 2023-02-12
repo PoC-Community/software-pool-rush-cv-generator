@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev:db": "docker run --name backend -e POSTGRES_PASSWORD=6Za1in99c -e POSTGRES_USER=backend -e POSTGRES_DB=backend -p 5432:5432 -d postgres:alpine"
+    "start": "npm run db:migrate:dev && ts-node src/server.ts",
+    "db:up": "docker run --name backend -e POSTGRES_PASSWORD=6Za1in99c -e POSTGRES_USER=backend -e POSTGRES_DB=backend -p 5432:5432 -d postgres:alpine",
+    "db:migrate:dev": "prisma migrate dev && npm run db:generate",
+    "db:generate": "prisma generate"
   },
   "author": "",
   "license": "ISC",

@@ -3,35 +3,51 @@ services:
   db:
     image: postgres:15.1
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_vol:/var/lib/postgresql/data
     restart: always
-    env_file:
-      - ./db/.env
     networks:
-      - back-tier
+      - db_net
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
 
   front:
     build: ./front-end/
     restart: always
     ports:
-      - "3000:3000"
-    env_file:
-      - ./front-end/.env
+      - 3000:3000
+    networks:
+      - app_net
 
   backend:
     depends_on:
       - db
     build: ./back-end/
     ports:
-      - "8080:8080"
+      - 8080:8080
     restart: always
-    env_file:
-      - ./back-end/.env
     networks:
-      - back-tier
+      - app_net
+      - db_net
+    environment:
+      - SERVER_PORT
+      - SERVER_HOST
+      - SECRET_JWT
+      - SALT_PASSWORD
+      - DB_USER
+      - DB_PASSWORD
+      - DB_HOST
+      - DB_PORT
+      - DB_NAME
+      - GLADIA_API_KEY
+      - SENDGRID_API_KEY
+      - DB_URL
 
 networks:
-  back-tier: {}
+  db_net:
+  app_net:
+
 
 volumes:
-  db_data: {}
+  db_vol:

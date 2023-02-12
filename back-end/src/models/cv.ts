@@ -31,8 +31,5 @@ export const deleteCv = async (uuid: string) => {
 
 export const getCvs = async (uuidUser: string) => {
   return await client.cv.findMany({
-    where: {
-      uuidUser
-    },
   });
 }

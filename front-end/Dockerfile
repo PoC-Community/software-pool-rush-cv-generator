@@ -1,6 +1,6 @@
 FROM node:lts-alpine3.16
 
-WORKDIR /app
+WORKDIR /app/front-end
 
 EXPOSE 3000
 
