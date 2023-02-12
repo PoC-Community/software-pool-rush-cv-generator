@@ -1,13 +1,19 @@
-import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Link, Stack, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Link, Stack, VStack, useToast, InputGroup,
+InputRightElement } from '@chakra-ui/react';
+import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons'
 import axios from 'axios';
 import React, { ReactElement, useState } from 'react';
 
 const Register = () : ReactElement => {
-    const [show] = React.useState(false);
+    const [showPasswd, setShowPasswd] = React.useState(false);
+    const [showConfirmedPasswd, setShowConfirmedPasswd] = React.useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [error, setError] = useState('');
+    const handleClickShowPasswd = () => setShowPasswd(!showPasswd);
+    const handleClickShowConfirmPasswd = () => setShowConfirmedPasswd(!showConfirmedPasswd)
+    const toast = useToast();
 
     const onRegister = async () : Promise<void> => {
         if (email.length === 0) {
@@ -34,6 +40,13 @@ const Register = () : ReactElement => {
             });
             localStorage.setItem('jwt', res.data.accessToken);
             window.location.href = '/Dashboard';
+            toast({
+                title: 'Account created.',
+                description: "We've created your account for you.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
 			return;
 		} catch(error) {
 			console.log(error);
@@ -61,34 +74,55 @@ const Register = () : ReactElement => {
                         onChange={e => setEmail(e.target.value)}
                         isInvalid={error === 'missing-email'}
                         bgColor="white"
+                        textColor="gray.600"
                         width='432px'
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
                         {error === 'missing-email' && <FormErrorMessage>Email is required.</FormErrorMessage>}
+                        <InputGroup>
                         <Input
-                        type={show ? 'text' : 'password'}
+                        type={showPasswd ? 'text' : 'password'}
                         placeholder='Enter password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         isInvalid={error === 'missing-password'}
                         bgColor="white"
+                        textColor="gray.600"
                         width='432px'
+                        margin="auto"
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        <InputRightElement paddingRight="50px">
+                            <Button height="40px" onClick={handleClickShowPasswd} borderRightRadius="20px"
+                            bgColor="transparent" variant="solid" _hover={{bgColor:"transparent"}}>
+                            {showPasswd ? <ViewIcon/> : <ViewOffIcon/>}
+                            </Button>
+                        </InputRightElement>
+                        </InputGroup>
                         {error === 'missing-password' && <FormErrorMessage>Password is required.</FormErrorMessage>}
+                        <InputGroup>
                         <Input
-                        type={show ? 'text' : 'password'}
+                        type={showConfirmedPasswd ? 'text' : 'password'}
                         isInvalid={error === 'wrong-password-confirmation' || error === 'missing-password-confirmation'}
                         placeholder='Confirm password'
                         value={confirmedPassword}
                         onChange={e => setConfirmedPassword(e.target.value)}
                         bgColor="white"
+                        textColor="gray.600"
                         width='432px'
+                        margin="auto"
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        <InputRightElement paddingRight="50px">
+                            <Button height="40px" onClick={handleClickShowConfirmPasswd} borderRightRadius="20px"
+                            bgColor="transparent" variant="solid" _hover={{bgColor:"transparent"}}>
+                            {showConfirmedPasswd ? <ViewIcon/> : <ViewOffIcon/>}
+                            </Button>
+                        </InputRightElement>
+                        </InputGroup>
                         {error === 'missing-password-confirmation' && <FormErrorMessage>Password confirmation is required.</FormErrorMessage>}
                         {error === 'wrong-password-confirmation' && <FormErrorMessage>Confirmation doesn't match.</FormErrorMessage>}
                         <Button id='registerPage-register-button' onClick={onRegister}

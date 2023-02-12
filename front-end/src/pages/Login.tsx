@@ -1,12 +1,15 @@
-import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Link, Stack, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormErrorMessage, Heading, useToast, Input, Link, Stack, VStack, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons'
 import axios from "axios";
 import React, { ReactElement, useState } from 'react';
 
 const Login = () : ReactElement => {
-    const [show] = React.useState(false);
+    const [show, setShow] = React.useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const handleClickShowPasswd = () => setShow(!show);
+    const toast = useToast();
 
     const onLogin = async () : Promise<void> => {
 		if (email.length === 0) {
@@ -24,11 +27,19 @@ const Login = () : ReactElement => {
             });
             localStorage.setItem('jwt', res.data.accessToken);
             window.location.href = '/Dashboard';
+            toast({
+                title: 'Account created.',
+                description: "We've created your account for you.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
 			return;
 		} catch(error) {
 			console.log(error);
 			return;
 		}
+        
     };
 
     return (
@@ -57,6 +68,7 @@ const Login = () : ReactElement => {
                         paddingLeft="20px"
                         />
                         {error === 'missing-email' && <FormErrorMessage>Email is required.</FormErrorMessage>}
+                        <InputGroup>
                         <Input
                         type={show ? 'text' : 'password'}
                         placeholder='Enter password'
@@ -64,11 +76,19 @@ const Login = () : ReactElement => {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         bgColor="white"
+                        width="432px"
+                        margin="auto"
                         textColor="gray.600"
-                        width='432px'
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        <InputRightElement paddingRight="50px">
+                            <Button height="40px" onClick={handleClickShowPasswd} borderRightRadius="20px"
+                            bgColor="transparent" variant="solid" _hover={{bgColor:"transparent"}}>
+                            {show ? <ViewIcon/> : <ViewOffIcon/>}
+                            </Button>
+                        </InputRightElement>
+                        </InputGroup>
                         {error === 'missing-password' && <FormErrorMessage>Password is required.</FormErrorMessage>}
                         <Button id='loginPage-login-button' onClick={onLogin}
                             variant="solid" bgColor="white" textColor="#86A8E7"

@@ -1,14 +1,18 @@
-import { Button, Center, Heading, Link, VStack, Box } from '@chakra-ui/react';
+import { Button, Center, Heading, Link, VStack, Box, Image } from '@chakra-ui/react';
 import { ReactElement } from 'react';
 
 const HomePage = () : ReactElement => {
     return (
         <Box bgGradient='linear(to-l, #7F7FD5, #86A8E7, #91EAE4)' height={'100vh'}>
         <Center mt="50px">
+            <VStack spacing="10px">
+            <Box boxSize='sm'>
+                <Image src='https://i.postimg.cc/gcDC8Gx0/person-outline-logo.png' alt='Person outline logo'
+                width="68%" margin="auto" paddingTop="80px"/>
+            </Box>
             <VStack spacing="50px">
                 <VStack spacing="20px">
-                    <Heading id="app-title" as="h1" size="4xl" noOfLines={1} textColor="white"
-                    paddingTop='150px'>
+                    <Heading id="app-title" as="h1" size="4xl" noOfLines={1} textColor="white">
                         CV Generator
                     </Heading>
                     <Heading id="app-sub-title" as="h2" size="xl" textColor="white">
@@ -31,6 +35,7 @@ const HomePage = () : ReactElement => {
                         </Button>
                     </Link>
                 </VStack>
+            </VStack>
             </VStack>
         </Center>
         </Box>

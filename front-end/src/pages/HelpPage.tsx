@@ -5,7 +5,7 @@ const Help = () : JSX.Element => (
         <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
                 <AccordionButton>
-                    <Box textAlign='left' width="894px">
+                    <Box textAlign='left' width="894px" textColor="white">
                         <Heading>
                             Experience
                         </Heading>
@@ -13,7 +13,7 @@ const Help = () : JSX.Element => (
                     <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                    <Text>
+                    <Text textColor="white">
                         The work experience section is where you get to really sell yourself, so you have to make sure you really iron out the details and the formatting makes sense.
                         This is where you get to show off your best qualities.
                         <Box boxSize='2'/>
@@ -32,14 +32,14 @@ const Help = () : JSX.Element => (
             <AccordionItem>
                 <AccordionButton>
                     <Box as="span" flex='1' textAlign='left'>
-                        <Heading>
+                        <Heading textColor="white">
                             Education
                         </Heading>
                     </Box>
                     <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                    <Text>
+                    <Text textColor="white">
                         There's more than one way to format your education section, depending on the amount of work experience you have and what details may be most relevant to the job you're applying for.
                         For each school you have attended, consider including some combination of the following (always include the three highlighted items):
                         <br />
@@ -74,14 +74,14 @@ const Help = () : JSX.Element => (
             <AccordionItem>
                 <AccordionButton>
                     <Box as="span" flex='1' textAlign='left'>
-                        <Heading>
+                        <Heading textColor="white">
                             Languages
                         </Heading>
                     </Box>
                     <AccordionIcon />
                 </AccordionButton>
             <AccordionPanel pb={4}>
-                <Text>
+                <Text textColor="white">
                     When listing your languages, consider how you can rate yourself. You can say that you are:
                     <br />
                     - Native
@@ -110,14 +110,14 @@ const Help = () : JSX.Element => (
         <AccordionItem>
             <AccordionButton>
                 <Box as="span" flex='1' textAlign='left'>
-                    <Heading>
+                    <Heading textColor="white">
                         Skills
                     </Heading>
                 </Box>
                 <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-                <Text>
+                <Text textColor="white">
                     Your skills must consist of a balanced number of soft skills and hard skills or technical skills.
                 </Text>
             </AccordionPanel>
