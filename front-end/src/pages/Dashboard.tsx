@@ -6,6 +6,8 @@ import { ReactElement, useEffect, useState } from 'react';
 import Cv from 'Types/Cv';
 
 const Dashboard = () : ReactElement => {
+    if (!localStorage.getItem('jwt'))
+        window.location.href = '/login';
 
     const listCv = async () : Promise<Cv[]> => {
         try {

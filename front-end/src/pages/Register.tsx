@@ -1,4 +1,4 @@
-import { Box, Button, Center, FormControl, Heading, Input, Link, Stack, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormErrorMessage, Heading, Input, Link, Stack, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { ReactElement, useState } from 'react';
 
@@ -9,12 +9,24 @@ const Register = () : ReactElement => {
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [error, setError] = useState('');
 
-    // Faire un form
     const onRegister = async () : Promise<void> => {
+        if (email.length === 0) {
+            setError('missing-email');
+            return;
+        }
+        if (password.length === 0) {
+            setError('missing-password');
+            return;
+        }
+        if (confirmedPassword.length === 0) {
+            setError('missing-password-confirmation');
+            return;
+        }
         if (password !== confirmedPassword) {
             setError('wrong-password-confirmation');
             return;
         }
+        console.log("Hey");
 		try {
 			const res = await axios.post('http://localhost:8080/auth/register', {
                 email,
@@ -45,6 +57,7 @@ const Register = () : ReactElement => {
                     <VStack spacing="20px">
                         <Input
                         placeholder='Enter email'
+                        value={email}
                         onChange={e => setEmail(e.target.value)}
                         isInvalid={error === 'missing-email'}
                         bgColor="white"
@@ -52,9 +65,11 @@ const Register = () : ReactElement => {
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        {error === 'missing-email' && <FormErrorMessage>Email is required.</FormErrorMessage>}
                         <Input
                         type={show ? 'text' : 'password'}
                         placeholder='Enter password'
+                        value={password}
                         onChange={e => setPassword(e.target.value)}
                         isInvalid={error === 'missing-password'}
                         bgColor="white"
@@ -62,16 +77,20 @@ const Register = () : ReactElement => {
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        {error === 'missing-password' && <FormErrorMessage>Password is required.</FormErrorMessage>}
                         <Input
                         type={show ? 'text' : 'password'}
                         isInvalid={error === 'wrong-password-confirmation' || error === 'missing-password-confirmation'}
                         placeholder='Confirm password'
+                        value={confirmedPassword}
                         onChange={e => setConfirmedPassword(e.target.value)}
                         bgColor="white"
                         width='432px'
                         borderRadius="20px"
                         paddingLeft="20px"
                         />
+                        {error === 'missing-password-confirmation' && <FormErrorMessage>Password confirmation is required.</FormErrorMessage>}
+                        {error === 'wrong-password-confirmation' && <FormErrorMessage>Confirmation doesn't match.</FormErrorMessage>}
                         <Button id='registerPage-register-button' onClick={onRegister}
                         variant="solid" bgColor="white" textColor="#86A8E7"
                         borderRadius="20px" width='432px'>

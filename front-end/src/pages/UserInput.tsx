@@ -1,12 +1,15 @@
-import { Stack, Box, Spacer, Link, Heading, Button } from '@chakra-ui/react'
-import { CheckCircleIcon } from '@chakra-ui/icons'
-import Skills from './InputGroups/SmallListing'
-import {Experience, Education} from './InputGroups/MassListing'
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Box, Button, Heading, Link, Spacer, Stack } from '@chakra-ui/react';
+import { ReactElement } from 'react';
 import Overview from './InputGroups/BasicOverview';
+import { Education, Experience } from './InputGroups/MassListing';
+import Skills from './InputGroups/SmallListing';
 
-const User = () : JSX.Element => (
-    <>
-    <Stack align='center' bgGradient='linear(to-l, #7F7FD5, #86A8E7, #91EAE4)' paddingTop='5px'>
+const User = () : ReactElement => {
+    if (!localStorage.getItem('jwt'))
+        window.location.href = '/login';
+
+    return (<Stack align='center' bgGradient='linear(to-l, #7F7FD5, #86A8E7, #91EAE4)' paddingTop='5px'>
         <Spacer />
         <Heading as="title" size="xl" noOfLines={1} textAlign='center' 
         textColor="white">
@@ -28,8 +31,7 @@ const User = () : JSX.Element => (
             </Button>
         </Link>
         <Box boxSize='5'/>
-    </Stack>
-    </>
-)
+    </Stack>);
+}
 
 export default User;
